@@ -1,8 +1,5 @@
 ﻿@page "/Customers"
 
-@*
-@using BlazorModels;
-*@
 @inject HttpClient http
 
 <h3>Customers</h3>
@@ -37,9 +34,8 @@
             <th></th>
         </tr>
     </thead>
-    @*
     <tbody>
-        @foreach (var customer in CustomerList)
+        @foreach (var customer in CustomerList ?? new())
         {
             <tr>
                 <td>
@@ -72,10 +68,8 @@
             </tr>
         }
     </tbody>
-    *@
 </table>
 
-@*
 
 @code {
     public List<CustomerViewModel>? CustomerList { get; set; } = new List<CustomerViewModel>();
@@ -94,4 +88,3 @@
         StateHasChanged();
     }
 }
-*@

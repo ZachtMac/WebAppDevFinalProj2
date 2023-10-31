@@ -1,13 +1,8 @@
 ﻿@page "/MenuItems"
 
-@*
-@using BlazorModels;
-*@
-
 @inject HttpClient http
 
 <h3>Menu Items</h3>
-
 
 <table class="full-width-table" style="white-space: nowrap !important;">
     <thead>
@@ -24,26 +19,25 @@
             <th style="width: 100%;"></th>
         </tr>
     </thead>
-    @*
     <tbody>
-        @foreach (var animal in AnimalList)
+        @foreach (var menuItem in MenuItemList ?? new())
         {
             
             <tr>
                 <td>
-                    @animal.AnimalId
+                    @menuItem.ItemId
                 </td>
                 <td style="text-align: left;">
-                    @animal.FullName
+                    @menuItem.Name
                 </td>
                 <td>
-                    @animal.Species
+                    @menuItem.Description
                 </td>
                 <td style="text-align: right;">
-                    $@animal.Price
+                    $@menuItem.Price
                 </td>
                 <td>
-                    <a href="@($"AnimalDetails/{animal.AnimalId}")">Details</a>
+                    <a href="@($"MenuItemDetails/{menuItem.ItemId}")">Details</a>
                 </td>
             </tr>
             
@@ -54,22 +48,20 @@
 
 </table>
 
-@*
 @code {
-    public List<AnimalViewModel>? AnimalList { get; set; } = new List<AnimalViewModel>();
+    public List<MenuItemViewModel>? MenuItemList { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
 
-        AnimalList = await http.GetFromJsonAsync<List<AnimalViewModel>>("api/Animals");
+        MenuItemList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/MenuItem");
         await base.OnInitializedAsync();
     }
 
-    private async void DeleteAnimal(int AnimalId)
+    private async void DeleteAnimal(int MenuItemId)
     {
-        var result = await http.DeleteAsync($"api/animals/{AnimalId}");
-        AnimalList = await http.GetFromJsonAsync<List<AnimalViewModel>>("api/Animals");
+        var result = await http.DeleteAsync($"api/MenuItem/{MenuItemId}");
+        MenuItemList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/MenuItem");
         StateHasChanged();
     }
 }
-*@

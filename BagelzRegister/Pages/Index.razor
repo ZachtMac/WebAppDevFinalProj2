@@ -1,20 +1,15 @@
 ﻿@page "/"
 @page "/Index"
 
-@*
-@using BlazorModels;
-*@
-
 @inject HttpClient http
 
 <h1>Choose Customer</h1>
 <form>
     <div>
-        @*
         <label class="control-label">Customer:</label>
         <select class="form-control" @bind="CustomerId">
             <option value="">Select A Customer...</option>
-            @foreach (var customer in Customers)
+            @foreach (var customer in Customers ?? new())
             {
                 <option value="@customer.CustomerId">@customer.FullName</option>
             }
@@ -26,15 +21,11 @@
            href="/AdoptionSale/@CustomerId"
         @onclick="SetAllowNavigate"
         @onclick:preventDefault="AllowNavigate">Go</a>
-        *@
     </div>
 </form>
 
-@*
 
 @code {
-
-
 
     public string? CustomerId { get; set; }
 
@@ -54,10 +45,4 @@
         await base.OnInitializedAsync();
     }
 
-
-
-
-
 }
-
-*@
