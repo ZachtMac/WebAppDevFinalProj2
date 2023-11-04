@@ -4,62 +4,55 @@
 
 <h3>Menu Items</h3>
 
-<table class="full-width-table" style="white-space: nowrap !important;">
+<p>
+    <NavLink Href="/menuitems/create">Create New</NavLink>
+</p>
+<table class="table">
     <thead>
         <tr>
-            <th>
-                Id
-            </th>
             <th>
                 Name
             </th>
             <th>
                 Price
             </th>
-            <th style="width: 100%;"></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var menuItem in MenuItemList ?? new())
+        @foreach (var menuItem in MenuItemViewModelList ?? new())
         {
-            
             <tr>
                 <td>
-                    @menuItem.Id
-                </td>
-                <td class="text-left">
                     @menuItem.Name
                 </td>
                 <td>
-                    @menuItem.Description
-                </td>
-                <td class="text-right">
-                    $@menuItem.Price
+                    @menuItem.Price.ToString("C")
                 </td>
                 <td>
-                    <a href="@($"MenuItemDetails/{menuItem.Id}")">Details</a>
+                    <a href="@($"menuitems/edit/{menuItem.Id}")">Edit</a> |
+                    <a href="@($"menuitems/details/{menuItem.Id}")">Details</a> |
+                    <a @onclick="@(() => DeleteMenuItemViewModel(menuItem.Id))"
+                    @onclick:preventDefault="true" href="">Delete</a>
                 </td>
             </tr>
-            
         }
-        
     </tbody>
 </table>
 
 @code {
-    public List<MenuItemViewModel>? MenuItemList { get; set; } = new();
+    public List<MenuItemViewModel>? MenuItemViewModelList { get; set; } = new List<MenuItemViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
-
-        MenuItemList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/MenuItem");
+        MenuItemViewModelList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems");
         await base.OnInitializedAsync();
     }
 
-    private async void DeleteAnimal(int MenuItemId)
+    private async void DeleteMenuItemViewModel(int menuItemId)
     {
-        var result = await http.DeleteAsync($"api/MenuItem/{MenuItemId}");
-        MenuItemList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/MenuItem");
+        var result = await http.DeleteAsync($"api/menuitems/{menuItemId}");
+        MenuItemViewModelList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems");
         StateHasChanged();
     }
 }
