@@ -3,7 +3,6 @@ using System;
 using BagelzClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,218 +11,203 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BagelzClassLibrary.Migrations
 {
     [DbContext(typeof(BagelzContext))]
-    [Migration("20231026200702_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20231104025350_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
 
             modelBuilder.Entity("BagelzClassLibrary.Entities.Customer", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PostalCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("State")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("Id");
 
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("BagelzClassLibrary.Entities.MenuItem", b =>
                 {
-                    b.Property<int>("MenuItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MenuItemId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("MenuItemId");
+                    b.HasKey("Id");
 
                     b.ToTable("MenuItems");
 
                     b.HasData(
                         new
                         {
-                            MenuItemId = 1,
+                            Id = 1,
                             Name = "White Bagel",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 2,
+                            Id = 2,
                             Name = "Everything Bagel",
-                            Price = 3f
+                            Price = 3m
                         },
                         new
                         {
-                            MenuItemId = 3,
+                            Id = 3,
                             Name = "Whole Wheat Bagel",
-                            Price = 3f
+                            Price = 3m
                         },
                         new
                         {
-                            MenuItemId = 4,
+                            Id = 4,
                             Name = "Cream Cheese",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 5,
+                            Id = 5,
                             Name = "BB Cream Cheese",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 6,
+                            Id = 6,
                             Name = "Cheese",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 7,
+                            Id = 7,
                             Name = "Jalapeno Peppers",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 8,
+                            Id = 8,
                             Name = "Pepper",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 9,
+                            Id = 9,
                             Name = "Honey",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 10,
+                            Id = 10,
                             Name = "Bacon",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 11,
+                            Id = 11,
                             Name = "Egg",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 12,
+                            Id = 12,
                             Name = "Tomato",
-                            Price = 1f
+                            Price = 1m
                         },
                         new
                         {
-                            MenuItemId = 13,
+                            Id = 13,
                             Name = "Avacado",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 14,
+                            Id = 14,
                             Name = "Coffee",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 15,
+                            Id = 15,
                             Name = "Pop",
-                            Price = 3f
+                            Price = 3m
                         },
                         new
                         {
-                            MenuItemId = 16,
+                            Id = 16,
                             Name = "Tea",
-                            Price = 2f
+                            Price = 2m
                         },
                         new
                         {
-                            MenuItemId = 17,
+                            Id = 17,
                             Name = "Water",
-                            Price = 0f
+                            Price = 0m
                         });
                 });
 
             modelBuilder.Entity("BagelzClassLibrary.Entities.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("BagelzClassLibrary.Entities.OrderLineItem", b =>
+            modelBuilder.Entity("BagelzClassLibrary.Entities.OrderItem", b =>
                 {
-                    b.Property<int>("OrderLineItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderLineItemId"));
-
-                    b.Property<int>("AnimalId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MenuItemId")
-                        .HasColumnType("int");
+                    b.Property<int>("MenuItemId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("OrderId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<float>("Price")
-                        .HasColumnType("real");
+                        .HasColumnType("REAL");
 
-                    b.HasKey("OrderLineItemId");
+                    b.HasKey("Id");
 
                     b.HasIndex("MenuItemId");
 
@@ -243,11 +227,13 @@ namespace BagelzClassLibrary.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("BagelzClassLibrary.Entities.OrderLineItem", b =>
+            modelBuilder.Entity("BagelzClassLibrary.Entities.OrderItem", b =>
                 {
                     b.HasOne("BagelzClassLibrary.Entities.MenuItem", "MenuItem")
                         .WithMany()
-                        .HasForeignKey("MenuItemId");
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BagelzClassLibrary.Entities.Order", null)
                         .WithMany("OrderLineItems")

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BagelzClassLibrary.Entities
 {
     [Table("OrderLineItems")]
-    public class OrderLineItem
+    public class OrderItem
     {
-        public int OrderLineItemId { get; set; }
+        public int Id { get; set; }
         
         public int MenuItemId { get; set; }
         

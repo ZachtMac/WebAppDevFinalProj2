@@ -41,7 +41,7 @@
     protected override async Task OnInitializedAsync()
     {
 
-        Customers = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/Customers");
+        Customers = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
         await base.OnInitializedAsync();
     }
 

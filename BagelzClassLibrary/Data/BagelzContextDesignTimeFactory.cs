@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BagelzClassLibrary.Data
 {
@@ -18,11 +12,12 @@ namespace BagelzClassLibrary.Data
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
-            var optionsBuilder = new DbContextOptionsBuilder<BagelzContext>();
+            
+            var builder = new DbContextOptionsBuilder<BagelzContext>();
 
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("dev"));
+            builder.UseSqlite(configuration.GetConnectionString("Default"));
 
-            return new BagelzContext(optionsBuilder.Options);
+            return new BagelzContext(builder.Options);
         }
     }
 }

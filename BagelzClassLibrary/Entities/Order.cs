@@ -10,7 +10,7 @@ namespace BagelzClassLibrary.Entities
     [Table("Orders")]
     public class Order
     {
-        public int OrderId { get; set; }
+        public int Id { get; set; }
         
         public DateTime OrderDate { get; set; }
         
@@ -18,7 +18,7 @@ namespace BagelzClassLibrary.Entities
         
         public virtual Customer? Customer { get; set; } = null;
         
-        public virtual ICollection<OrderLineItem> OrderLineItems { get; set; } = new List<OrderLineItem>();
+        public virtual ICollection<OrderItem> OrderLineItems { get; set; } = new List<OrderItem>();
 
     }
 }

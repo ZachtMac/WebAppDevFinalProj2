@@ -1,11 +1,11 @@
-﻿@page "/Customers"
+﻿@page "/customers"
 
 @inject HttpClient http
 
 <h3>Customers</h3>
 
 <p>
-    <a href="CustomerCreate">Create New</a>
+    <NavLink Href="/customers/create">Create New</NavLink>
 </p>
 <table class="table">
     <thead>
@@ -60,8 +60,8 @@
                     @customer.Country
                 </td>
                 <td>
-                    <a href="@($"CustomerEdit/{customer.Id}")">Edit</a> |
-                    <a href="@($"CustomerDetails/{customer.Id}")">Details</a> |
+                    <a href="@($"customers/edit/{customer.Id}")">Edit</a> |
+                    <a href="@($"customers/details/{customer.Id}")">Details</a> |
                     <a @onclick="@(() => DeleteCustomer(customer.Id))"
                     @onclick:preventDefault="true" href="">Delete</a>
                 </td>
@@ -76,15 +76,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-
-        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/Customers");
+        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
         await base.OnInitializedAsync();
     }
 
     private async void DeleteCustomer(int CustomerId)
     {
         var result = await http.DeleteAsync($"api/customers/{CustomerId}");
-        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/Customers");
+        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
         StateHasChanged();
     }
 }

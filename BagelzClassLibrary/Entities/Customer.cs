@@ -13,7 +13,7 @@ namespace BagelzClassLibrary.Entities
 
     public class Customer
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
         
         [DisplayName("First Name")]
         public string? FirstName { get; set; }
@@ -26,7 +26,8 @@ namespace BagelzClassLibrary.Entities
         public string? City { get; set; }
         
         public string? State { get; set; }
-        
+
+        [DisplayName("Zip Code")]
         public string? PostalCode { get; set; }
         
         public string? Country { get; set; }

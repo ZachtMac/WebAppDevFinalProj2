@@ -1,7 +1,7 @@
 using BagelzClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace BagelzRegisterWebApi
+namespace BagelzWebApi
 {
     public class Program
     {
@@ -40,12 +40,17 @@ namespace BagelzRegisterWebApi
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-
-            app.UseCors("CorsAllowAll");
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.UseCors("CorsAllowAll");
 
 
             app.MapControllers();
