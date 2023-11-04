@@ -1,0 +1,12 @@
+﻿<span>
+    @ChildContent
+    <span class="spinner-grow text-primary" role="status"></span>
+</span>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = new RenderFragment(builder =>
+    {
+        builder.AddContent(0, "Loading...");
+    });
+}
