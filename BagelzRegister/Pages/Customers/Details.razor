@@ -4,6 +4,13 @@
 
 <h3>Customer Details</h3>
 
+@if (CustomerId is null || CustomerId < 1)
+{
+    <p>Invalid customer id.</p>
+    <NavLink Href="/customers">Back to list</NavLink>
+    return;
+}
+
 @if (Customer is null)
 {
     <Loader>
@@ -55,7 +62,7 @@
         </dl>
     </div>
     <div>
-        <NavLink Href="/customers/edit">Edit</NavLink>
+        <NavLink Href="@{$"/customers/edit/{CustomerId}"}">Edit</NavLink>
         <NavLink Href="/customers">Back to list</NavLink>
     </div>
 </main>
