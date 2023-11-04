@@ -25,27 +25,25 @@
             
             <tr>
                 <td>
-                    @menuItem.ItemId
+                    @menuItem.Id
                 </td>
-                <td style="text-align: left;">
+                <td class="text-left">
                     @menuItem.Name
                 </td>
                 <td>
                     @menuItem.Description
                 </td>
-                <td style="text-align: right;">
+                <td class="text-right">
                     $@menuItem.Price
                 </td>
                 <td>
-                    <a href="@($"MenuItemDetails/{menuItem.ItemId}")">Details</a>
+                    <a href="@($"MenuItemDetails/{menuItem.Id}")">Details</a>
                 </td>
             </tr>
             
         }
         
     </tbody>
-    *@
-
 </table>
 
 @code {

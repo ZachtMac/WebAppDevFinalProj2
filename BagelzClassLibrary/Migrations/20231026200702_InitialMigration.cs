@@ -110,7 +110,7 @@ namespace BagelzClassLibrary.Migrations
                     { 10, "Bacon", 2f },
                     { 11, "Egg", 2f },
                     { 12, "Tomato", 1f },
-                    { 13, "Avacado", 2f },
+                    { 13, "Avocado", 2f },
                     { 14, "Coffee", 2f },
                     { 15, "Pop", 3f },
                     { 16, "Tea", 2f },

@@ -12,7 +12,9 @@ namespace BagelzClassLibrary.Entities
     public class MenuItem
     {
         public int MenuItemId { get; set; }
+        
         public string? Name { get; set; }
+        
         public float Price { get; set; }
 
     }
