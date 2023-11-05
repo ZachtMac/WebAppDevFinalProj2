@@ -1,13 +1,10 @@
-﻿@inject IJSRuntime js
-
-<div class="card">
-    <div class="menu-item-card card-body"
+﻿<div class="card">
+    <div @onclick="@(() => AddToCart(MenuItem.Id))"
+         class="menu-item-card card-body"
          style="
             --bg-color: @BackgroundColor;
             --text-color: @TextColor;
-            "
-         @onclick="@(() => AddToCart(MenuItem.Id))"
-    >
+    ">
         <div class="card-title">
             <h5>@MenuItem.Name</h5>
         </div>
@@ -26,13 +23,21 @@
     public MenuItemViewModel MenuItem { get; set; } = default!;
 
     [Parameter]
+    [EditorRequired]
+    public OrderViewModel Order { get; set; } = default!;
+
+    [Parameter]
     public string BackgroundColor { get; set; } = "white";
 
     [Parameter]
     public string TextColor { get; set; } = "black";
 
-    protected async void AddToCart(int productId)
+    protected void AddToCart(int menuItemId)
     {
-        await js.InvokeVoidAsync("alert", $"The product id of the product clicked was {productId}");
+        Order.OrderItems.Add(new OrderItemViewModel
+        {
+            MenuItemId = menuItemId,
+            Quantity = 1
+        });
     }
 }

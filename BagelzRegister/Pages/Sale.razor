@@ -8,16 +8,15 @@
 }
 else
 {
-    <CustomerCard Customer="@Customer" BackgroundColor="var(--bs-info)"/>
+    <CustomerOrderCard Customer="@Customer" Order="@Order" BackgroundColor="var(--bs-info)"/>
 
     <div class="menu-item-card-container">
         @foreach(var item in MenuItems)
         {
-            <MenuItemCard MenuItem="item"/>
+            <MenuItemCard MenuItem="item" Order="@Order"/>
         }
     </div>
 }
-
 
 @code {
     [Parameter]
@@ -27,10 +26,16 @@ else
 
     private List<MenuItemViewModel> MenuItems { get; set; } = new();
 
+    private OrderViewModel Order { get; set; } = new();
+
     protected override async Task OnInitializedAsync()
     {
         Customer = await http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
         MenuItems = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems") ?? new();
+        
+        Order.CustomerId = CustomerId;
+        Order.OrderDate = DateTime.Now;
+
         await base.OnInitializedAsync();
     }
 }

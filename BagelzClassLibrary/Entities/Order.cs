@@ -18,7 +18,7 @@ namespace BagelzClassLibrary.Entities
         
         public virtual Customer? Customer { get; set; } = null;
         
-        public virtual ICollection<OrderItem> OrderLineItems { get; set; } = new List<OrderItem>();
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     }
 }
