@@ -1,10 +1,10 @@
-﻿@page "/customers/details/{CustomerId:int?}"
+﻿@page "/customers/details/{CustomerId:int}"
 
 @inject HttpClient Http;
 
 <h3>Customer Details</h3>
 
-@if (CustomerId is null || CustomerId < 1)
+@if (CustomerId < 1)
 {
     <p>Invalid customer id.</p>
     <NavLink Href="/customers">Back to list</NavLink>
@@ -70,15 +70,12 @@
 @code {
 
     [Parameter]
-    public int? CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     public CustomerViewModel? Customer { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (CustomerId != null)
-        {
-            Customer = await Http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
-        }
+        Customer = await Http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
     }
 }

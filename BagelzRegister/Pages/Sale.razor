@@ -1,0 +1,37 @@
+﻿@page "/sale/{CustomerId:int}"
+
+@inject HttpClient http
+
+@if(Customer is null)
+{
+    <p>Retrieving customer info...</p>
+}
+else
+{
+    <CustomerCard Customer="@Customer" BackgroundColor="var(--bs-info)"/>
+
+    <div class="menu-item-card-container">
+        @foreach(var item in MenuItems)
+        {
+            <MenuItemCard MenuItem="item"/>
+        }
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public int CustomerId { get; set; }
+
+    private CustomerViewModel? Customer { get; set; }
+
+    private List<MenuItemViewModel> MenuItems { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customer = await http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
+        MenuItems = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems") ?? new();
+        await base.OnInitializedAsync();
+    }
+}
+

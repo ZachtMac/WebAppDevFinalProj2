@@ -15,6 +15,8 @@ namespace BagelzModels
         
         public string? Description { get; set; }
         
-        public float Price { get; set; }
+        public decimal Price { get; set; }
+
+        public string FormattedPrice => String.Format("{0:C}", Price);
     }
 }

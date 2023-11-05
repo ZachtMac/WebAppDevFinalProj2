@@ -1,10 +1,10 @@
-﻿@page "/menuitems/details/{MenuItemId:int?}"
+﻿@page "/menuitems/details/{MenuItemId:int}"
 
 @inject HttpClient Http;
 
 <h3>Menu Item Details</h3>
 
-@if (MenuItemId is null || MenuItemId < 1)
+@if (MenuItemId < 1)
 {
     <p>Invalid menu item id.</p>
     <NavLink Href="/menuitems">Back to list</NavLink>
@@ -45,15 +45,12 @@
 @code {
 
     [Parameter]
-    public int? MenuItemId { get; set; }
+    public int MenuItemId { get; set; }
 
     public MenuItemViewModel? MenuItem { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        if (MenuItemId != null)
-        {
-            MenuItem = await Http.GetFromJsonAsync<MenuItemViewModel>($"api/menuitems/{MenuItemId}");
-        }
+        MenuItem = await Http.GetFromJsonAsync<MenuItemViewModel>($"api/menuitems/{MenuItemId}");
     }
 }

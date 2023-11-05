@@ -1,4 +1,4 @@
-﻿@page "/customers/edit/{CustomerId:int?}";
+﻿@page "/customers/edit/{CustomerId:int}";
 
 @inject HttpClient Http;
 
@@ -8,7 +8,7 @@
 
 <hr />
 
-@if (CustomerId is null || CustomerId < 1)
+@if (CustomerId < 1)
 {
     <p>Invalid customer id.</p>
     <NavLink Href="/customers">Back to list</NavLink>
@@ -73,7 +73,7 @@
 
 
     [Parameter]
-    public int? CustomerId { get; set; }
+    public int CustomerId { get; set; }
 
     public CustomerViewModel? Customer { get; set; }
 

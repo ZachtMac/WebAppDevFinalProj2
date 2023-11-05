@@ -9,7 +9,7 @@
         <label class="control-label">Customer:</label>
         <select class="form-control" @bind="CustomerId">
             <option value="">Select A Customer...</option>
-            @foreach (var customer in Customers ?? new())
+            @foreach (var customer in Customers)
             {
                 <option value="@customer.Id">@customer.FullName</option>
             }
@@ -17,10 +17,11 @@
         <span asp-validation-for="CustomerId" class="text-danger"></span>
     </div>
     <div class="form-group m-2">
-        <a class="btn btn-primary"
-           href="/AdoptionSale/@CustomerId"
-        @onclick="SetAllowNavigate"
-        @onclick:preventDefault="AllowNavigate">Go</a>
+           <NavLink 
+               class="btn btn-primary"
+               Href="@{$"/sale/{CustomerId}"}"
+               @onclick:preventDefault="DisallowNavigation"
+           >Go</NavLink>
     </div>
 </form>
 
@@ -31,17 +32,16 @@
 
     public bool AllowNavigate { get; set; } = true;
 
-    public List<CustomerViewModel>? Customers { get; set; } = new List<CustomerViewModel>();
+    public List<CustomerViewModel> Customers { get; set; } = new();
 
-    private void SetAllowNavigate()
+    public bool DisallowNavigation
     {
-        AllowNavigate = string.IsNullOrWhiteSpace(CustomerId);
+        get => string.IsNullOrEmpty(CustomerId);
     }
 
     protected override async Task OnInitializedAsync()
     {
-
-        Customers = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
+        Customers = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers") ?? new();
         await base.OnInitializedAsync();
     }
 
