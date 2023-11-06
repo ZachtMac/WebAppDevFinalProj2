@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 
 namespace BagelzClassLibrary.Entities
 {
-    [Table("OrderLineItems")]
-    public class OrderLineItem
+    [Table("OrderItems")]
+    public class OrderItem
     {
-        public int OrderLineItemId { get; set; }
-        public int AnimalId { get; set; }
+        public int Id { get; set; }
+        
+        public int MenuItemId { get; set; }
+        
         public int OrderId { get; set; }
-        public float Price { get; set; }
+        
+        public decimal Price { get; set; }
+
+        public int Quantity { get; set; }
+
         public virtual MenuItem? MenuItem { get; set; } = null;
     }
 }

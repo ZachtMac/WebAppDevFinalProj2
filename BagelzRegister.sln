@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagelzClassLibrary", "Bagel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagelzModels", "BagelzModels\BagelzModels.csproj", "{E56B4CF1-59D9-4723-AA9E-ABAAEB02F159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BagelzRegisterWebApi", "BagelzRegisterWebApi\BagelzRegisterWebApi.csproj", "{90FBC720-DD98-4D21-B04B-BEF9101173EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BagelzWebApi", "BagelzWebApi\BagelzWebApi.csproj", "{B3842BC9-92DD-4CE0-B823-4E06777276BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{E56B4CF1-59D9-4723-AA9E-ABAAEB02F159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E56B4CF1-59D9-4723-AA9E-ABAAEB02F159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E56B4CF1-59D9-4723-AA9E-ABAAEB02F159}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90FBC720-DD98-4D21-B04B-BEF9101173EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90FBC720-DD98-4D21-B04B-BEF9101173EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90FBC720-DD98-4D21-B04B-BEF9101173EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90FBC720-DD98-4D21-B04B-BEF9101173EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3842BC9-92DD-4CE0-B823-4E06777276BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3842BC9-92DD-4CE0-B823-4E06777276BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3842BC9-92DD-4CE0-B823-4E06777276BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3842BC9-92DD-4CE0-B823-4E06777276BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

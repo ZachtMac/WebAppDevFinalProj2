@@ -15,7 +15,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="7.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -28,6 +27,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BagelzClassLibrary\BagelzClassLibrary.csproj" />
     <ProjectReference Include="..\BagelzModels\BagelzModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
 </Project>

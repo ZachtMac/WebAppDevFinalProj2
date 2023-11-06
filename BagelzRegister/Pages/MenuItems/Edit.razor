@@ -1,0 +1,69 @@
+﻿@page "/menuitems/edit/{MenuItemId:int}";
+
+@inject HttpClient Http;
+
+@using Microsoft.AspNetCore.Components.Forms
+
+<h3>Edit Menu Item</h3>
+
+<hr />
+
+@if (MenuItemId < 1)
+{
+    <p>Invalid menu item id.</p>
+    <NavLink Href="/menuitems">Back to list</NavLink>
+    return;
+}
+
+@if (MenuItem is null)
+{
+    <p>Loading menu item details...</p>
+    return;
+}
+
+<div class="container">
+    <div class="row">
+        <EditForm Model="MenuItem" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="MenuItem.Name" class="form-control" id="Name" placeholder="Name" />
+                <label for="Name">Name</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputNumber @bind-Value="MenuItem.Price" class="form-control" id="Price" placeholder="Price" />
+                <label for="Price">Price</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </EditForm>
+    </div>
+    <div class="row">
+        <div class="my-1">
+            <NavLink Href="/menuitems">Back to Menu Items</NavLink>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int MenuItemId { get; set; }
+
+    public MenuItemViewModel? MenuItem { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        MenuItem = await Http.GetFromJsonAsync<MenuItemViewModel>($"api/menuitems/{MenuItemId}");
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if (MenuItem != null)
+        {
+            await Http.PutAsJsonAsync<MenuItemViewModel>($"api/menuitems/{MenuItemId}", MenuItem);
+        }
+    }
+}

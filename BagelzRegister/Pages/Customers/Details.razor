@@ -1,0 +1,81 @@
+﻿@page "/customers/details/{CustomerId:int}"
+
+@inject HttpClient Http;
+
+<h3>Customer Details</h3>
+
+@if (CustomerId < 1)
+{
+    <p>Invalid customer id.</p>
+    <NavLink Href="/customers">Back to list</NavLink>
+    return;
+}
+
+@if (Customer is null)
+{
+    <Loader>
+        Loading customer details...
+    </Loader>
+    return;
+}
+<main class="p-2">
+    <div>
+        <h4>Customer</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                FirstName
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.FirstName
+            </dd>
+            <dt class="col-sm-2">
+                LastName
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.LastName
+            </dd>
+            <dt class="col-sm-2">
+                Address
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.Address
+            </dd>
+            <dt class="col-sm-2">
+                City
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.City
+            </dd>
+            <dt class="col-sm-2">
+                State
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.State
+            </dd>
+            <dt class="col-sm-2">
+                PostalCode
+            </dt>
+            <dd class="col-sm-10">
+                @Customer.PostalCode
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <NavLink Href="@{$"/customers/edit/{CustomerId}"}">Edit</NavLink>
+        <NavLink Href="/customers">Back to list</NavLink>
+    </div>
+</main>
+
+@code {
+
+    [Parameter]
+    public int CustomerId { get; set; }
+
+    public CustomerViewModel? Customer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customer = await Http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
+    }
+}

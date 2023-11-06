@@ -1,0 +1,58 @@
+﻿@page "/menuitems"
+
+@inject HttpClient http
+
+<h3>Menu Items</h3>
+
+<p>
+    <NavLink Href="/menuitems/create">Create New</NavLink>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var menuItem in MenuItemViewModelList ?? new())
+        {
+            <tr>
+                <td>
+                    @menuItem.Name
+                </td>
+                <td>
+                    @menuItem.Price.ToString("C")
+                </td>
+                <td>
+                    <a href="@($"menuitems/edit/{menuItem.Id}")">Edit</a> |
+                    <a href="@($"menuitems/details/{menuItem.Id}")">Details</a> |
+                    <a @onclick="@(() => DeleteMenuItemViewModel(menuItem.Id))"
+                    @onclick:preventDefault="true" href="">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    public List<MenuItemViewModel>? MenuItemViewModelList { get; set; } = new List<MenuItemViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        MenuItemViewModelList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems");
+        await base.OnInitializedAsync();
+    }
+
+    private async void DeleteMenuItemViewModel(int menuItemId)
+    {
+        var result = await http.DeleteAsync($"api/menuitems/{menuItemId}");
+        MenuItemViewModelList = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems");
+        StateHasChanged();
+    }
+}

@@ -1,0 +1,35 @@
+﻿<div class="customer-card card my-2" style="
+    --bg-color: @BackgroundColor;
+    --color: @TextColor;
+">
+
+    <div class="card-body">
+        <h5 class="card-title">
+            @Customer.FirstName @Customer.LastName
+        </h5>
+        <p class="card-text">
+            Address: @Customer.Address
+            Price: @Order.FormattedTotal
+        </p>
+        <NavLink Href="@{$"/customers/details/{Order.Id}"}">
+            Cart
+        </NavLink>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public CustomerViewModel Customer { get; set; } = default!;
+
+    [Parameter]
+    [EditorRequired]
+    public OrderViewModel Order { get; set; } = default!;
+
+    [Parameter]
+    public string BackgroundColor { get; set; } = "var(--bs-white)";
+
+    [Parameter]
+    public string TextColor { get; set; } = "var(--bs-black)";
+}

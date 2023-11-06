@@ -1,14 +1,11 @@
-﻿@page "/Customers"
+﻿@page "/customers"
 
-@*
-@using BlazorModels;
-*@
 @inject HttpClient http
 
 <h3>Customers</h3>
 
 <p>
-    <a href="CustomerCreate">Create New</a>
+    <NavLink Href="/customers/create">Create New</NavLink>
 </p>
 <table class="table">
     <thead>
@@ -37,9 +34,8 @@
             <th></th>
         </tr>
     </thead>
-    @*
     <tbody>
-        @foreach (var customer in CustomerList)
+        @foreach (var customer in CustomerList ?? new())
         {
             <tr>
                 <td>
@@ -64,34 +60,30 @@
                     @customer.Country
                 </td>
                 <td>
-                    <a href="@($"CustomerEdit/{customer.CustomerId}")">Edit</a> |
-                    <a href="@($"CustomerDetails/{customer.CustomerId}")">Details</a> |
-                    <a @onclick="@( () => DeleteCustomer(customer.CustomerId))"
+                    <a href="@($"customers/edit/{customer.Id}")">Edit</a> |
+                    <a href="@($"customers/details/{customer.Id}")">Details</a> |
+                    <a @onclick="@(() => DeleteCustomer(customer.Id))"
                     @onclick:preventDefault="true" href="">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
-    *@
 </table>
 
-@*
 
 @code {
     public List<CustomerViewModel>? CustomerList { get; set; } = new List<CustomerViewModel>();
 
     protected override async Task OnInitializedAsync()
     {
-
-        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/Customers");
+        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
         await base.OnInitializedAsync();
     }
 
     private async void DeleteCustomer(int CustomerId)
     {
         var result = await http.DeleteAsync($"api/customers/{CustomerId}");
-        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/Customers");
+        CustomerList = await http.GetFromJsonAsync<List<CustomerViewModel>>("api/customers");
         StateHasChanged();
     }
 }
-*@

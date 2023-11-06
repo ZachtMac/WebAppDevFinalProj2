@@ -1,0 +1,93 @@
+﻿@page "/customers/edit/{CustomerId:int}";
+
+@inject HttpClient Http;
+
+@using Microsoft.AspNetCore.Components.Forms
+
+<h3>Edit Customer</h3>
+
+<hr />
+
+@if (CustomerId < 1)
+{
+    <p>Invalid customer id.</p>
+    <NavLink Href="/customers">Back to list</NavLink>
+    return;
+}
+
+@if (Customer is null)
+{
+    <Loader>
+        Loading customer details...
+    </Loader>
+    return;
+}
+
+<div class="container">
+    <div class="row">
+        <EditForm Model="Customer" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.FirstName" class="form-control" id="FirstName" placeholder="First Name" />
+                <label for="FirstName">First Name</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.LastName" class="form-control" id="LastName" placeholder="Last Name" />
+                <label for="LastName">Last Name</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.Address" class="form-control" id="Address" placeholder="Address" />
+                <label for="Address">Address</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.City" class="form-control" id="City" placeholder="City" />
+                <label for="City">City</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.State" class="form-control" id="State" placeholder="State" />
+                <label for="State">State</label>
+            </div>
+
+            <div class="form-floating my-2">
+                <InputText @bind-Value="Customer.PostalCode" class="form-control" id="PostalCode" placeholder="Postal Code" />
+                <label for="PostalCode">Postal Code</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </EditForm>
+    </div>
+    <div class="row">
+        <div class="my-1">
+            <NavLink Href="/customers">Back to Customers</NavLink>
+        </div>
+    </div>
+</div>
+
+@code {
+
+
+    [Parameter]
+    public int CustomerId { get; set; }
+
+    public CustomerViewModel? Customer { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Customer = await Http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
+    }
+
+    private async void HandleValidSubmit()
+    {
+        if(Customer != null)
+        {
+            await Http.PutAsJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}", Customer);
+        }
+    }
+    
+}
