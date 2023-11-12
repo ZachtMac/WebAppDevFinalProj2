@@ -4,9 +4,6 @@
 
 <h3>Menu Items</h3>
 
-<p>
-    <NavLink Href="/menuitems/create">Create New</NavLink>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -30,10 +27,7 @@
                     @menuItem.Price.ToString("C")
                 </td>
                 <td>
-                    <a href="@($"menuitems/edit/{menuItem.Id}")">Edit</a> |
-                    <a href="@($"menuitems/details/{menuItem.Id}")">Details</a> |
-                    <a @onclick="@(() => DeleteMenuItemViewModel(menuItem.Id))"
-                    @onclick:preventDefault="true" href="">Delete</a>
+                    <a href="@($"menuitems/details/{menuItem.Id}")">Details</a>
                 </td>
             </tr>
         }

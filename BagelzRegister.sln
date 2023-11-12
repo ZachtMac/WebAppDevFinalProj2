@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagelzClassLibrary", "Bagel
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagelzModels", "BagelzModels\BagelzModels.csproj", "{E56B4CF1-59D9-4723-AA9E-ABAAEB02F159}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BagelzWebApi", "BagelzWebApi\BagelzWebApi.csproj", "{B3842BC9-92DD-4CE0-B823-4E06777276BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BagelzWebApi", "BagelzWebApi\BagelzWebApi.csproj", "{B3842BC9-92DD-4CE0-B823-4E06777276BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

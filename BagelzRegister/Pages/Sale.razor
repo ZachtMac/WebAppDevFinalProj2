@@ -2,23 +2,30 @@
 
 @inject HttpClient http
 
+
 @if(Customer is null)
 {
     <p>Retrieving customer info...</p>
 }
 else
 {
-    <CustomerOrderCard Customer="@Customer" Order="@Order" BackgroundColor="var(--bs-info)"/>
+    <CustomerOrderCard Customer="@Customer" Order="@Order" BackgroundColor="#FFCC33" />
 
     <div class="menu-item-card-container">
         @foreach(var item in MenuItems)
         {
-            <MenuItemCard MenuItem="item" Order="@Order"/>
+            <MenuItemCard MenuItem="item" Order="@Order" BackgroundColor="#F5F5F5"/>
         }
+    </div>
+
+    <div class="Receipt-card-container">
+        <ReceiptCard Order="@Order" BackgroundColor="#F5F5F5"/>
     </div>
 }
 
+
 @code {
+
     [Parameter]
     public int CustomerId { get; set; }
 
@@ -28,8 +35,10 @@ else
 
     private OrderViewModel Order { get; set; } = new();
 
+
     protected override async Task OnInitializedAsync()
     {
+
         Customer = await http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
         MenuItems = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems") ?? new();
         
