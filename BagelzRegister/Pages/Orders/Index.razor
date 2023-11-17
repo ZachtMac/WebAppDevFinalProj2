@@ -1,7 +1,74 @@
 ﻿@page "/orders";
 
+@inject HttpClient http
+
 <h3>Orders</h3>
 
-@code {
+<table class="table">
+    <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    OrderDate
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    OrderItems
+                </th>
+                <th>
+                    Total
+                </th>             
+                <th></th>
+            </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in OrderList ?? new())
+        {
+            <tr>
+                <td>
+                    @order.Id
+                </td>
+                <td>
+                    @order.OrderDate
+                </td>
+                <td>
+                    @order.Customer
+                </td>
+                <td>
+                    @order.OrderItems
+                </td>
+                <td>
+                    @order.FormattedTotal
+                </td>
+                
+                <td>                   
+                    <a href="@($"orders/details/{order.Id}")">Details</a> |
+                    <a @onclick="@(() => DeleteOrder(order.Id))"
+                    @onclick:preventDefault="true" href="">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
+
+@code {
+    public List<OrderViewModel>? OrderList { get; set; } = new List<OrderViewModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        OrderList = await http.GetFromJsonAsync<List<OrderViewModel>>("api/orders");
+        await base.OnInitializedAsync();
+    }
+
+    private async void DeleteOrder(int Id)
+    {
+        var result = await http.DeleteAsync($"api/orders/{Id}");
+        OrderList = await http.GetFromJsonAsync<List<OrderViewModel>>("api/orders");
+        StateHasChanged();
+    }
 }

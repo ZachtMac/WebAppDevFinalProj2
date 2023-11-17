@@ -1,0 +1,153 @@
+﻿@inject HttpClient Http;
+@inject NavigationManager NavManager;
+
+@using BagelzClassLibrary.Entities;
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="card">
+    <div 
+         class="receipt-card card-body"
+         style="
+            --bg-color: @BackgroundColor;
+            --text-color: @TextColor;
+            border: 1px solid @BorderColor;
+            border-radius: 4px;
+    ">
+        <div class="card-title" >
+            <h5>Receipt</h5>
+        </div>
+
+        <EditForm Model="Order" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            
+            <div class="card-text">
+                <p>                            
+                    <div class="col-6">
+                        <div class="m=1" style="border:solid 1px black; border-radius: 10px;">
+                            <span class="m-1" style="font-weight:bold">
+                                Date: @DateTime.Now.ToString("yyy-M-dd HH:mm")
+                            </span>                        
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <span class="m-1" style="font-weight:bold;text-decoration:underline">Qty</span>
+                                    </div>
+                                    <div class="col-8">
+                                        <span class="m-1" style="font-weight:bold;text-decoration:underline">Item</span>
+                                    </div>
+                                    <div class="col-2">
+                                        <span class="m-1" style="font-weight:bold;text-decoration:underline">Price</span>
+                                    </div>
+                                </div>
+
+                            
+
+
+
+
+
+
+
+                                @*----------Tryed using all this to print reciept on ordering screen - was unable to figure it out properly but it may help you.---------*@
+                                @* Attempt to add items to the receipt ----delete if not needed
+                                   @if (Order != null && Order.OrderItems.Any())
+                                    {
+                                    var orderItems = Order.OrderItems
+                                    .GroupBy(g => g.MenuItemId)
+                                    .Select(o => new orderItem
+                                    {
+                                        Quantity = o.Count(),
+                                        MenuItem = o.Where(p => p.MenuItemId == o.Key).First()!.MenuItem,
+                                        Price = o.Where(p => p.MenuItemId == o.Key).First()!.MenuItem!.Price * o.Count()
+
+                                    });
+                                                
+                                    
+                                    });
+                                        foreach (var orderItem in orderItems)//Model.Order.OrderItems)
+                                        {
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <span class="m-1">@orderItem.Quantity</span>
+                                                </div>
+                                                <div class="col-8">
+                                                        <span class="m-1">@orderItem.MenuItem!.Name</span>
+                                                </div>
+                                                <div class="col-2">
+                                                    <span class="m-1">
+                                                        @{
+                                                            var price = orderItem.MenuItem!.Price;
+                                                            var quantity = orderItem.Quantity;
+                                                            var lineTotal = price * quantity;
+                                                            orderTotal += lineTotal;
+                                                            @($"{lineTotal:###0.00}")
+                                                        }
+                                                    </span>
+                                                </div>
+                                </div>*@
+
+
+
+
+
+                                <div class="row">
+                                    <div class="col-2">
+                                        <span class="m-1"></span>
+                                    </div>
+                                    <div class="col-8">
+                                        <span class="m-1"></span>
+                                    </div>
+                                    <div class="col-2">
+                                        <span class="m-1"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </p>
+
+                <p>             
+                    Total: @($"{orderTotal:$###0.00}")
+                </p>
+            </div>
+        
+        <button type="submit" class="btn btn-primary">Save</button>
+        </EditForm>
+
+
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [EditorRequired]
+    public MenuItemViewModel MenuItem { get; set; } = default!;
+
+    [Parameter]
+    [EditorRequired]
+    public OrderViewModel Order { get; set; } = new OrderViewModel();
+
+    public List<OrderItemViewModel>? OrderItems { get; set; }
+
+    [Parameter]
+    public decimal orderTotal { get; set; }
+
+    [Parameter]
+    public string BackgroundColor { get; set; } = "white";
+
+    [Parameter]
+    public string TextColor { get; set; } = "black";
+
+    [Parameter]
+    public string BorderColor { get; set; } = "#989898";
+
+    private async void HandleValidSubmit()
+    {
+        await Http.PostAsJsonAsync<OrderViewModel>("api/orders", Order);
+        // Redirect to list
+        NavManager.NavigateTo("/orders");
+    }
+}
