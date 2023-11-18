@@ -33,7 +33,7 @@
     [Parameter]
     [EditorRequired]
     public OrderViewModel Order { get; set; } = default!;
- 
+
     [Parameter]
     public string BackgroundColor { get; set; } = "white";
 
@@ -42,6 +42,21 @@
 
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
+
+
+    [Parameter]
+    public EventCallback<OrderViewModel> OnAddToCart { get; set; }
+
+    protected async void AddToCart(int menuItemId)
+    {
+        Order.OrderItems.Add(new OrderItemViewModel
+            {
+                MenuItemId = menuItemId,
+                Quantity = 1
+            });
+
+        await OnAddToCart.InvokeAsync(Order);
+    }
 
     @*--------------Commented out below - I started using this in the Receipt 
     file still not sure the best locaton as I had no 
@@ -56,11 +71,11 @@
             MenuItemId = menuItemId,
             Quantity = 1
         });
-    }*@
+    }
 
 
     protected async void AddToCart(int menuItemId)
     {
         await js.InvokeVoidAsync("alert", $"The product id of the product clicked was {menuItemId}");
-    }
+    }*@
 }

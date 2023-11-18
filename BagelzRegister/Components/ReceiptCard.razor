@@ -144,6 +144,14 @@
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
 
+    private OrderViewModel receiptOrder = new OrderViewModel();
+
+    private void HandleAddToCart(OrderViewModel updatedOrder)
+    {
+        // Update the receiptOrder or perform other actions
+        receiptOrder = updatedOrder;
+    }
+
     private async void HandleValidSubmit()
     {
         await Http.PostAsJsonAsync<OrderViewModel>("api/orders", Order);
