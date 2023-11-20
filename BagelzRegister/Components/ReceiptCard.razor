@@ -33,9 +33,11 @@
 
                 </table>
             </div>
-            
+            <div class="Tax">
+                <p>Tax: @((Order.TotalPrice * TaxRate).ToString("C"))</p>
+            </div>
             <div class="total">
-                <p>Total: @Order.FormattedTotalPrice</p>
+                <p>Total: @(((Order.TotalPrice) + (Order.TotalPrice * TaxRate)).ToString("C"))</p>
             </div>
 
             <div class="buttons">
@@ -61,6 +63,10 @@
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
 
+    [Parameter]
+    public decimal TaxRate { get; set; } = 0.08m;
+
+
     private void CancelOrder()
     {
         // Redirect to beginning
@@ -85,7 +91,6 @@
                     Quantity = orderItem?.Quantity ?? 0,
                 });
         }
-
 
         var response = await Http.PostAsJsonAsync<Order>("api/orders", order);
         
