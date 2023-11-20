@@ -53,7 +53,7 @@
                 Total
             </dt>
             <dd class="col-sm-10">
-                @Order.FormattedTotalPrice
+                @(((Order.TotalPrice) + (Order.Tax)).ToString("C"))
             </dd>
         </dl>
     </div>

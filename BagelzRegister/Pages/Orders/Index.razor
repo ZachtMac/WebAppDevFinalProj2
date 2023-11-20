@@ -42,7 +42,7 @@
                     @order.OrderItemsReadable
                 </td>
                 <td>
-                    @order.FormattedTotalPrice
+                    @(((order.TotalPrice) + (order.Tax)).ToString("C"))
                 </td>
                 
                 <td>                   
