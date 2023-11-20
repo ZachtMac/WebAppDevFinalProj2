@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace BagelzModels
 {
@@ -12,9 +13,6 @@ namespace BagelzModels
         [DisplayName("Last Name")]
         public string? LastName { get; set; }
         
-        [DisplayName("Customer Name")]
-        public string FullName => $"{LastName}, {FirstName}";
-        
         public string? Address { get; set; }
         
         public string? City { get; set; }
@@ -24,5 +22,11 @@ namespace BagelzModels
         public string? PostalCode { get; set; }
         
         public string? Country { get; set; }
+
+        [DisplayName("Customer Name")]
+        [JsonIgnore]
+        public string FullName => $"{LastName}, {FirstName}";
+
+        public override string ToString() => FullName;
     }
 }

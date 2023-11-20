@@ -5,7 +5,9 @@
 
 @if(Customer is null)
 {
-    <p>Retrieving customer info...</p>
+    <Loader>
+        <p>Retrieving customer info...</p>
+    </Loader>
 }
 else
 {
@@ -14,11 +16,11 @@ else
     <div class="menu-item-card-container">
         @foreach(var item in MenuItems)
         {
-            <MenuItemCard MenuItem="item" Order="@Order" BackgroundColor="#F5F5F5"/>
+            <MenuItemCard MenuItem="item"  BackgroundColor="#F5F5F5" OnAddToCart="AddToCart"/>
         }
     </div>
 
-    <div class="Receipt-card-container">
+    <div class="receipt-card-container my-3">
         <ReceiptCard Order="@Order" BackgroundColor="#F5F5F5"/>
     </div>
 }
@@ -35,17 +37,44 @@ else
 
     private OrderViewModel Order { get; set; } = new();
 
-
     protected override async Task OnInitializedAsync()
     {
-
         Customer = await http.GetFromJsonAsync<CustomerViewModel>($"api/customers/{CustomerId}");
         MenuItems = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems") ?? new();
-        
+
         Order.CustomerId = CustomerId;
+        Order.Customer = Customer;
         Order.OrderDate = DateTime.Now;
 
         await base.OnInitializedAsync();
+    }
+
+    private void AddToCart(int menuItemId)
+    {
+        // If it has the item, increment the quantity
+        
+        var existingItem = Order.OrderItems.FirstOrDefault(x => x.MenuItemId == menuItemId);
+        
+        if (existingItem != null)
+        {
+            existingItem.Quantity++;
+        }
+        else
+        {
+            // If it doesn't have the item, add it to the order
+            var menuItem = MenuItems.FirstOrDefault(m => m.Id == menuItemId);
+            Order.OrderItems.Add(new OrderItemViewModel
+                {
+                    MenuItemId = menuItemId,
+                    MenuItem = menuItem,
+                    OrderId = Order.Id,
+                    Price = menuItem?.Price ?? 0,
+                    Quantity = 1
+                });
+        }
+
+        // Rerender
+        StateHasChanged();
     }
 }
 

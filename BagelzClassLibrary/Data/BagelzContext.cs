@@ -26,6 +26,26 @@ namespace BagelzClassLibrary.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Relationships
+
+            // Customer-Order Relationship
+            modelBuilder.Entity<Customer>()
+                .HasMany(c => c.Orders)
+                .WithOne(o => o.Customer)
+                .HasForeignKey(o => o.CustomerId);
+
+            // Order-OrderItem Relationship
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderItems);
+
+            // MenuItem-OrderItem Relationship
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.MenuItem)
+                .WithMany()
+                .HasForeignKey(oi => oi.MenuItemId);
+
+            // Database seeding
+
             modelBuilder.Entity<MenuItem>().HasData(
                 new MenuItem { Id = 1, Name = "White Bagel", Price = 2m },
                 new MenuItem { Id = 2, Name = "Everything Bagel", Price = 3m },
@@ -39,7 +59,7 @@ namespace BagelzClassLibrary.Data
                 new MenuItem { Id = 10, Name = "Bacon", Price = 2m },
                 new MenuItem { Id = 11, Name = "Egg", Price = 2m },
                 new MenuItem { Id = 12, Name = "Tomato", Price = 1m },
-                new MenuItem { Id = 13, Name = "Avacado", Price = 2m },
+                new MenuItem { Id = 13, Name = "Avocado", Price = 2m },
                 new MenuItem { Id = 14, Name = "Coffee", Price = 2m },
                 new MenuItem { Id = 15, Name = "Pop", Price = 3m },
                 new MenuItem { Id = 16, Name = "Tea", Price = 2m },

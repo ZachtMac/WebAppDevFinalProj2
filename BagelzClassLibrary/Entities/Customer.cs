@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
+using System.ComponentModel.DataAnnotations;
 
 namespace BagelzClassLibrary.Entities
 {
@@ -13,6 +14,8 @@ namespace BagelzClassLibrary.Entities
 
     public class Customer
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [DisplayName("First Name")]

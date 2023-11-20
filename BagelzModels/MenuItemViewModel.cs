@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BagelzModels
@@ -17,6 +18,7 @@ namespace BagelzModels
         
         public decimal Price { get; set; }
 
+        [JsonIgnore]
         public string FormattedPrice => String.Format("{0:C}", Price);
     }
 }

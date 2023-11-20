@@ -1,7 +1,5 @@
 ﻿@inject IJSRuntime js 
 
-@*----------^^^not particularly needed but I used it for the AddToCart message at the very bottom of file (used to check the menuitem click was working (it is!)) (please delete if not used)----------*@
-
 <div class="card">
     <div @onclick="@(() => AddToCart(MenuItem.Id))"
          class="menu-item-card card-body"
@@ -23,7 +21,6 @@
 </div>
 
 
-
 @code {
 
     [Parameter]
@@ -31,9 +28,8 @@
     public MenuItemViewModel MenuItem { get; set; } = default!;
 
     [Parameter]
-    [EditorRequired]
     public OrderViewModel Order { get; set; } = default!;
- 
+
     [Parameter]
     public string BackgroundColor { get; set; } = "white";
 
@@ -43,24 +39,14 @@
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
 
-    @*--------------Commented out below - I started using this in the Receipt 
-    file still not sure the best locaton as I had no 
-    luck on functionality but it being commented out here allows for order saving
-    even though there is no information in the order - hersforth why I am also 
-    leaving this here -----Please remove comments and below comments if unused :) ------*@
 
-    @*protected void AddToCart(int menuItemId)
-    {
-        Order.OrderItems.Add(new OrderItemViewModel
-        {
-            MenuItemId = menuItemId,
-            Quantity = 1
-        });
-    }*@
-
+    [Parameter]
+    [EditorRequired]
+    public EventCallback<int> OnAddToCart { get; set; }
 
     protected async void AddToCart(int menuItemId)
     {
-        await js.InvokeVoidAsync("alert", $"The product id of the product clicked was {menuItemId}");
+        await OnAddToCart.InvokeAsync(menuItemId);
     }
+
 }

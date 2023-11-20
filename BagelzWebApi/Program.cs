@@ -1,5 +1,6 @@
 using BagelzClassLibrary.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace BagelzWebApi
 {
@@ -16,10 +17,23 @@ namespace BagelzWebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<BagelzContext>(optionsBuilder =>
+            builder.Services.AddDbContext<BagelzContext>(options =>
             {
-                optionsBuilder.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+                options
+                    .UseLazyLoadingProxies()
+                    .UseSqlite(builder.Configuration.GetConnectionString("Default"))
+                ;
             });
+
+            // Add services to the container.
+            builder.Services
+                .AddControllersWithViews()
+                .AddJsonOptions(options =>
+                {
+                    // This prevents cyclic graph traversal
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                }
+            );
 
             builder.Services.AddControllers();
 
