@@ -1,43 +1,46 @@
-﻿@inject HttpClient Http;
+﻿@using BagelzClassLibrary.Entities;
+@inject HttpClient Http;
 @inject NavigationManager NavManager;
 
-@using BagelzClassLibrary.Entities;
-@using Microsoft.AspNetCore.Components.Forms
-
-<div class="card receipt-card">
-    <div 
-         class="card-body"
-         style="
+<div class="card receipt-card" style="
             --bg-color: @BackgroundColor;
             --text-color: @TextColor;
             border: 1px solid @BorderColor;
             border-radius: 4px;
     ">
+    <div class="card-body">
         <div class="card-title">
             <h5>Receipt</h5>
         </div>
  
         <div class="card-text">
-            <table>
-                <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                </tr>
-                
-                @foreach (var orderItem in Order.OrderItems ?? new())
-                {
+            <div class="table-responsive">
+                <table class="table table-hover">
                     <tr>
-                        <td>@orderItem?.MenuItem?.Name</td>
-                        <td>@orderItem.Quantity</td>
-                        <td>@orderItem?.MenuItem?.FormattedPrice</td>
+                        <th colspan="8" scope="col">Item</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
                     </tr>
-                }
-                
-            </table>
+
+                    @foreach (var orderItem in Order.OrderItems ?? new())
+                    {
+                        <tr>
+                            <td colspan="8">@orderItem?.MenuItem?.Name</td>
+                            <td>@orderItem?.Quantity</td>
+                            <td>@orderItem?.MenuItem?.FormattedPrice</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
             
             <div class="total">
-                <p>Total: @Order.FormattedTotal</p>
+                <p>Total: @Order.FormattedTotalPrice</p>
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-primary" @onclick="PlaceOrder">Place Order</button>
+                <button class="btn btn-secondary" @onclick="CancelOrder">Cancel Order</button>
             </div>
             
         </div>
@@ -58,10 +61,34 @@
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
 
-
-    private async void HandleValidSubmit()
+    private void CancelOrder()
     {
-        await Http.PostAsJsonAsync<OrderViewModel>("api/orders", Order);
+        // Redirect to beginning
+        NavManager.NavigateTo("/");
+    }
+
+    private async void PlaceOrder()
+    {
+
+        var order = new Order
+            {
+                OrderDate = Order.OrderDate,
+                CustomerId = Order.CustomerId,
+            };
+
+        foreach (var orderItem in Order.OrderItems ?? new())
+        {
+            order.OrderItems.Add(new OrderItem
+                {
+                    MenuItemId = orderItem.MenuItemId,
+                    Price = orderItem?.MenuItem?.Price ?? 0,
+                    Quantity = orderItem?.Quantity ?? 0,
+                });
+        }
+
+
+        var response = await Http.PostAsJsonAsync<Order>("api/orders", order);
+        
         // Redirect to list
         NavManager.NavigateTo("/orders");
     }

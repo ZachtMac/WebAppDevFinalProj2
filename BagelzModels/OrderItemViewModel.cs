@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BagelzModels
@@ -19,5 +20,8 @@ namespace BagelzModels
         public int Quantity { get; set; }
 
         public virtual MenuItemViewModel? MenuItem { get; set; } = null;
+
+        [JsonIgnore]
+        public decimal TotalPrice => Price * Quantity;
     }
 }

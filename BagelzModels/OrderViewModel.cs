@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BagelzModels
@@ -18,8 +19,13 @@ namespace BagelzModels
 
         public virtual List<OrderItemViewModel> OrderItems { get; set; } = new();
 
-        public decimal Total => OrderItems.Sum(oi => oi.Price * oi.Quantity);
+        [JsonIgnore]
+        public decimal TotalPrice => OrderItems.Sum(oi => oi.TotalPrice);
 
-        public string FormattedTotal => String.Format("{0:C}", Total);
+        [JsonIgnore]
+        public string FormattedTotalPrice => String.Format("{0:C}", TotalPrice);
+
+        [JsonIgnore]
+        public string OrderItemsReadable => OrderItems.ToList().Select(oi => oi.MenuItem?.Name ?? "Error").Aggregate((a, b) => $"{a}, {b}");
     }
 }

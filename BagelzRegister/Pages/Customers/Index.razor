@@ -1,4 +1,6 @@
 ﻿@page "/customers"
+@using System.Reflection;
+@using System.ComponentModel.DataAnnotations;
 
 @inject HttpClient http
 
@@ -11,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                FirstName
+                First Name
             </th>
             <th>
-                LastName
+                Last Name
             </th>
             <th>
                 Address
@@ -26,7 +28,7 @@
                 State
             </th>
             <th>
-                PostalCode
+                Postal Code
             </th>
             <th>
                 Country

@@ -29,7 +29,11 @@ namespace BagelzWebApi.Controllers
           {
               return NotFound();
           }
-            return await _context.Orders.ToListAsync();
+            return await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.MenuItem) // If you also want to include details of each MenuItem
+                .Include(o => o.Customer)
+                .ToListAsync();
         }
 
         // GET: api/Orders/5

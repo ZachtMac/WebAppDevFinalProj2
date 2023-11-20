@@ -20,7 +20,7 @@ else
         }
     </div>
 
-    <div class="receipt-card-container">
+    <div class="receipt-card-container my-3">
         <ReceiptCard Order="@Order" BackgroundColor="#F5F5F5"/>
     </div>
 }
@@ -43,6 +43,7 @@ else
         MenuItems = await http.GetFromJsonAsync<List<MenuItemViewModel>>("api/menuitems") ?? new();
 
         Order.CustomerId = CustomerId;
+        Order.Customer = Customer;
         Order.OrderDate = DateTime.Now;
 
         await base.OnInitializedAsync();
