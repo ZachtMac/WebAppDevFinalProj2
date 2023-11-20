@@ -198,11 +198,14 @@ namespace BagelzClassLibrary.Migrations
                     b.Property<int>("MenuItemId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<float>("Price")
-                        .HasColumnType("REAL");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -210,7 +213,7 @@ namespace BagelzClassLibrary.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderLineItems");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("BagelzClassLibrary.Entities.Order", b =>
@@ -233,10 +236,8 @@ namespace BagelzClassLibrary.Migrations
                         .IsRequired();
 
                     b.HasOne("BagelzClassLibrary.Entities.Order", null)
-                        .WithMany("OrderLineItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("MenuItem");
                 });
@@ -248,7 +249,7 @@ namespace BagelzClassLibrary.Migrations
 
             modelBuilder.Entity("BagelzClassLibrary.Entities.Order", b =>
                 {
-                    b.Navigation("OrderLineItems");
+                    b.Navigation("OrderItems");
                 });
 #pragma warning restore 612, 618
         }

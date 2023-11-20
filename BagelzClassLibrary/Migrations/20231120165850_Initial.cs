@@ -67,30 +67,30 @@ namespace BagelzClassLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderLineItems",
+                name: "OrderItems",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     MenuItemId = table.Column<int>(type: "INTEGER", nullable: false),
-                    OrderId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Price = table.Column<float>(type: "REAL", nullable: false)
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    OrderId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderLineItems", x => x.Id);
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderLineItems_MenuItems_MenuItemId",
+                        name: "FK_OrderItems_MenuItems_MenuItemId",
                         column: x => x.MenuItemId,
                         principalTable: "MenuItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderLineItems_Orders_OrderId",
+                        name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
@@ -118,13 +118,13 @@ namespace BagelzClassLibrary.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderLineItems_MenuItemId",
-                table: "OrderLineItems",
+                name: "IX_OrderItems_MenuItemId",
+                table: "OrderItems",
                 column: "MenuItemId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderLineItems_OrderId",
-                table: "OrderLineItems",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
@@ -137,7 +137,7 @@ namespace BagelzClassLibrary.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderLineItems");
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "MenuItems");
