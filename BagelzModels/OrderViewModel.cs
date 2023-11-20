@@ -19,6 +19,11 @@ namespace BagelzModels
 
         public virtual List<OrderItemViewModel> OrderItems { get; set; } = new();
 
+        public decimal TaxRate { get; set; } = 0.08m;
+
+        [JsonIgnore]
+        public decimal Tax => TotalPrice * TaxRate;
+
         [JsonIgnore]
         public decimal TotalPrice => OrderItems.Sum(oi => oi.TotalPrice);
 

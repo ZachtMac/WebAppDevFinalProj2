@@ -34,10 +34,10 @@
                 </table>
             </div>
             <div class="Tax">
-                <p>Tax: @((Order.TotalPrice * TaxRate).ToString("C"))</p>
+                <p>Tax: @((Order.Tax).ToString("C"))</p>
             </div>
             <div class="total">
-                <p>Total: @(((Order.TotalPrice) + (Order.TotalPrice * TaxRate)).ToString("C"))</p>
+                <p>Total: @(((Order.TotalPrice) + (Order.Tax)).ToString("C"))</p>
             </div>
 
             <div class="buttons">
@@ -62,9 +62,6 @@
 
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
-
-    [Parameter]
-    public decimal TaxRate { get; set; } = 0.08m;
 
 
     private void CancelOrder()
