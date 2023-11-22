@@ -1,0 +1,46 @@
+﻿@BagelzWebApi_HostAddress = https://localhost:7292
+
+GET {{BagelzWebApi_HostAddress}}/api/orderitems
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/orderitems/16
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/orders
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/orders/8
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/customers
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/customers/1
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/menuitems
+
+###
+
+GET {{BagelzWebApi_HostAddress}}/api/menuitems/1
+
+###
+
+POST {{BagelzWebApi_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+    "id":0,"firstName":"Tim","lastName":"Tarkov","address":"123 ABC St","city":"Dayton","state":"Ohio","postalCode":"111111","country":null
+}
+
+###
+
+DELETE {{BagelzWebApi_HostAddress}}/api/customers/7
+
+###
