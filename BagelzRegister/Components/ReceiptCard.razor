@@ -33,9 +33,11 @@
 
                 </table>
             </div>
-            
+            <div class="Tax">
+                <p>Tax: @((Order.Tax).ToString("C"))</p>
+            </div>
             <div class="total">
-                <p>Total: @Order.FormattedTotalPrice</p>
+                <p>Total: @(((Order.TotalPrice) + (Order.Tax)).ToString("C"))</p>
             </div>
 
             <div class="buttons">
@@ -61,6 +63,7 @@
     [Parameter]
     public string BorderColor { get; set; } = "#989898";
 
+
     private void CancelOrder()
     {
         // Redirect to beginning
@@ -85,7 +88,6 @@
                     Quantity = orderItem?.Quantity ?? 0,
                 });
         }
-
 
         var response = await Http.PostAsJsonAsync<Order>("api/orders", order);
         
