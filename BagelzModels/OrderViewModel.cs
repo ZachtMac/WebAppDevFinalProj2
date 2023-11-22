@@ -19,6 +19,7 @@ namespace BagelzModels
 
         public virtual List<OrderItemViewModel> OrderItems { get; set; } = new();
 
+        [JsonIgnore]
         public decimal TaxRate { get; set; } = 0.08m;
 
         [JsonIgnore]

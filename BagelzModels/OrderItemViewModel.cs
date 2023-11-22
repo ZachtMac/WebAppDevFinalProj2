@@ -19,8 +19,6 @@ namespace BagelzModels
 
         public int Quantity { get; set; }
 
-        public decimal TaxRate { get; set; } = 0.0575m;
-
         public virtual MenuItemViewModel? MenuItem { get; set; } = null;
 
         [JsonIgnore]
